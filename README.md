@@ -29,7 +29,7 @@ The main feature of Namespaces is to makes our process completely separated/isol
  lsns
  ```
 
-For the first we need to have filesystem, lets extract nginx docker image filesystem end use it
+For the first we need to have a filesystem, let's extract the ubuntu docker image filesystem end use it
 ```
 mkdir -p /opt/containers/ubuntu/rootfs
 cd /opt/containers
@@ -38,11 +38,12 @@ docker run --name test-ubuntu ubuntu
 docker export test-ubuntu | tar -C ubuntu/rootfs/ -xf-
 ls -l ubuntu/rootfs
 ```
-Now we are going to use linux namespaces to create our container. For that ushare command will be used.
+Now we are going to use Linux namespaces to create our container. For that ushare command will be used.
+
 ```
 unshare --mount --uts --ipc --net --pid --fork bash
 ```
-Now we have isolated process, lets check for example UTS namespace
+Now we have isolated process, let's check for example UTS namespace
 ```
 hostname
 hostname my-test-container
