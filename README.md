@@ -54,7 +54,7 @@ Now open new terminal on the same machine and check the hostname
 ```
 hostname
 ```
-now we are going to checko PID namespace
+now we are going to check PID namespace
 ```
 ps
 kill -9 <pid of unshare>
@@ -62,6 +62,7 @@ ps -ef
 mount -t proc proc /proc
 ps 
 ps -ef 
+umount /proc
 ```
 Now we will use [pivot_root](https://man7.org/linux/man-pages/man2/pivot_root.2.html) to change our root directory
 ```
@@ -136,6 +137,9 @@ COPY . /app
 ADD my_fole /
 CMD ["/my_app"]
 ```
-Docker downloads the tarballs from which consists our image, then unpacks each layer into a separate directory and with help of overlay filesystem combines them all together with an empty upper directory, in which out container will write its changes.
-When the container exits, docker will performe cleans up on upper folder - our changes on container will not persist.
+When we run "docker build" Docker downloads the tarballs from which consist of our image, then unpacks each layer into a separate directory. While building new image additional layers will be created for each COPY, ADD, RUN command. 
+When running a container Docker with the help of the Overlay filesystem combines all layers together with an empty upper directory, in which our container will write its changes.
+When the container removed, Docker will perform cleans up on the upper folder - our changes on the container will not persist.
+
+
 
