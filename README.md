@@ -74,7 +74,6 @@ ps -ef
 mount -t proc proc /proc
 ps 
 ps -ef 
-umount /proc
 ```
 
 Fixing our mount points
