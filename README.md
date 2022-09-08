@@ -43,18 +43,7 @@ Now we are going to use Linux namespaces to create our container. For that ushar
 ```
 unshare --mount --uts --ipc --net --pid --fork bash
 ```
-Now we will use [pivot_root](https://man7.org/linux/man-pages/man2/pivot_root.2.html) to change our root directory
-```
-mkdir /opt/containers/ubuntu/rootfs/oldroot/
-mkdir /my-ubuntu-container
-mount --bind /opt/containers/ubuntu/rootfs/ /my-ubuntu-container
-cd /my-ubuntu-container 
-ls -l 
-pivot_root . oldroot
-cd /
-ls -l
-ls -l /oldroot
-```
+
 Now we have isolated process, let's check for example UTS namespace
 ```
 hostname
@@ -76,7 +65,18 @@ ps
 ps -ef 
 umount /proc
 ```
-
+Now we will use [pivot_root](https://man7.org/linux/man-pages/man2/pivot_root.2.html) to change our root directory
+```
+mkdir /opt/containers/ubuntu/rootfs/oldroot/
+mkdir /my-ubuntu-container
+mount --bind /opt/containers/ubuntu/rootfs/ /my-ubuntu-container
+cd /my-ubuntu-container 
+ls -l 
+pivot_root . oldroot
+cd /
+ls -l
+ls -l /oldroot
+```
 Fixing our mount points
 ```
 mount -t proc proc /proc
