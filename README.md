@@ -63,7 +63,6 @@ ps -ef
 mount -t proc proc /proc
 ps 
 ps -ef 
-umount /proc
 ```
 Now we will use [pivot_root](https://man7.org/linux/man-pages/man2/pivot_root.2.html) to change our root directory
 ```
