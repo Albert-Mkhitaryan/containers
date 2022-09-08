@@ -137,9 +137,16 @@ COPY . /app
 ADD my_fole /
 CMD ["/my_app"]
 ```
-When we run "docker build" Docker downloads the tarballs from which consist of our image, then unpacks each layer into a separate directory. While building new image additional layers will be created for each COPY, ADD, RUN command. 
-When running a container Docker with the help of the Overlay filesystem combines all layers together with an empty upper directory, in which our container will write its changes.
-When the container removed, Docker will perform cleans up on the upper folder - our changes on the container will not persist.
+  * Download the tarball of image specified in the "FROM" and unpacks it.
+  * Mounts a union file system, the lower dir will be just downloaded and unpacked tarball. The upper dir - empty folder
+  * Start bash and execute the "COPY" instruction
+  * When completed, docker creates a tarball for the upper layer. This becomes a new layer for the image we are building
+  * If our Dockerfile contains other commands, repeat the process for previous step
 
 
 
+## What is Open Container Initiative (OCI)?
+ * The Open Container Initiative (OCI) is a Linux Foundation project to design open standards for containers(Established by Docker).
+ * OCI currently contains two specifications: the Runtime Specification (runtime-spec) and the Image Specification (image-spec).
+ * OCI runtime spec defines how to run the OCI image bundle as a container.
+ * OCI image spec defines how to create an OCI Image, which includes an image manifest, a filesystem (layer) serialization, and an image configuration.
